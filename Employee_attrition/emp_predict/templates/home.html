@@ -1,0 +1,121 @@
+{%load staticfiles %}
+<!DOCTYPE html>
+<html>
+<title>Sitanshu Employee Attrition</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src=" https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<link href="{% static 'data/styles.css' %}" type="text/css" rel="stylesheet"/>
+<body>
+<!-- <button class="button button4">Click Here To know House Price ?.....</button> -->
+<div class="container">
+  <h1>Employee   Attrition  Prediction ....</h1>
+  <!-- Trigger the modal with a button -->
+  
+  <button class="button button4" data-toggle="modal" data-target="#myModal"><b>Click Here To know Probability Of Your Employee ?.....</b></button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content appear">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <center><h4 class="modal-title">Employee Information...</h4></center>
+        </div>
+        <form id="myform">
+            1-->Enter the age of Employee  :  
+           <input type="text" id="age" name="age" required ><br><br>
+           2-->Enter the Employee Travel Details :
+			<br>
+           <input type="radio" name="Bussiness_Travel" value=2 checked>Travel_Frequently<br>
+           <input type="radio" name="Bussiness_Travel" value=1>Travel_Rarely <br>     
+           <input type="radio" name="Bussiness_Travel" value=3>Non Travel<br><br>
+           3-->Enter the Employee distance from home  : 
+           <input type="text" id="home_distance" name="distance_from_home" required><br> <br>
+           4-->Enter the Employee Department  : <br>
+           <input type="radio" name="Department" value="1" checked>R&D<br>
+           <input type="radio" name="Department" value="2" >Sales<br>     
+           <input type="radio" name="Department" value="3" >Human Resources<br><br>
+           5-->Enter the Employee daily wage  :
+           <input type="text"  id="daily_wage" name="daily_wage" required><br><br>
+           6-->Enter the Employee Education  :  
+           <input type="text" id="edu" name="Education" required>
+		   <ol>
+		   <li>Intermediate</li>
+		   <li>Graduate</li>
+		   <li>Post-Graduate</li>
+           </ol>	<br>	   
+		   7-->Enter the Education Field  : <br>
+           <input type="radio" name="Education_Field" value=2 checked>Medical<br>
+           <input type="radio" name="Education_Field" value=1 >Life Science<br>
+           <input type="radio" name="Education_Field" value=3>Marketing<br>     
+           <input type="radio" name="Education_Field" value=5>Techinal Degree<br>     
+           <input type="radio" name="Education_Field" value=6>Human Resources<br>
+		   <input type="radio" name="Education_Field" value=4>Other<br><br>
+           8-->Enter the Employee  Experience  :
+           <input type="text" id="exp" name="Experience" required> <br><br>
+           <center><input type="button" id="Result" value="*** Click Here To Predict ***"></center>
+    </form>
+        <div class="modal-footer" 
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+</body>
+<script>
+        $(document).ready(function(){
+        //set a click event on button
+        $("#Result").click(function(){
+        //select email value
+		
+		
+        var age=$("#age").val();
+		    	   
+        var home_dist=$("#home_distance").val();
+		   
+		
+        var daily_wage=$("#daily_wage").val();
+                  		
+        var edu=$("#edu").val(); 
+        var exp=$("#exp").val(); 
+        var buss_travel= $('input[name=Bussiness_Travel]:checked','#myform').val()
+        var Department= $('input[name=Department]:checked','#myform').val()
+        var education= $('input[name=Education_Field]:checked','#myform').val()
+        $.get('/predict',{Age:age,BusinessTravel:buss_travel,DailyRate:daily_wage,Department:Department,DistanceFromHome:home_dist,Education: edu,EducationField:education,YearsAtCompany:exp},
+             function(res){
+		    	 
+			 
+			 if(parseFloat(res)>60.00)
+			 {
+			    url = '/emp_in?res=' + res
+				window.location.href = url;
+     
+			 }
+			 else
+			 {
+               url = '/emp_out?res=' + res
+				window.location.href = url;
+			 
+			 }
+			 
+        });
+			 
+        
+        });
+        
+        });
+		
+		// redirect to another apge
+		
+		
+</script>
+
+</html>

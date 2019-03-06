@@ -1,0 +1,14 @@
+body{
+background:url("IMAGES/emp_left.jpg");
+background-repeat:no-repeat;
+background-size: cover;
+}
+
+h1 {
+    color : #FFFFFF;
+    text-align : center;
+    font-family: "SIMPSON";
+}
+h2{ 
+  color:#FFFFFF;
+}

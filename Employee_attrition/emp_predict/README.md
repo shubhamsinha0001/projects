@@ -1,0 +1,1 @@
+In this logistic regression is used to find of attrition risk prediction by taking 8 input from user
